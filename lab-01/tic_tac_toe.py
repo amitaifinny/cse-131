@@ -10,6 +10,8 @@
 #      -total time in hours including reading the assignment and submitting the program-
 
 import json
+import os
+
 
 # The characters used in the Tic-Tac-Too board.
 # These are constants and therefore should never have to change.
@@ -29,16 +31,22 @@ blank_board = {
 
 def read_board(filename):
     '''Read the previously existing board from the file if it exists.'''
-    # Put file reading code here.
-    return blank_board['board']
+    if os.path.exists(filename):
+        with open(filename, "r") as file:
+            prev_board = json.load(file)
+            return prev_board
+
+    else:
+        return blank_board['board']
 
 def save_board(filename, board):
     '''Save the current game to a file.'''
-    # Put file writing code here.
+    with open(filename, "w") as file:
+        file.write(board)
 
 def display_board(board):
     '''Display a Tic-Tac-Toe board on the screen in a user-friendly way.'''
-    # Put display code here.
+    
 
 def is_x_turn(board):
     '''Determine whose turn it is.'''

@@ -34,15 +34,18 @@ def read_board(filename):
     if os.path.exists(filename):
         with open(filename, "r") as file:
             prev_board = json.load(file)
-            return prev_board
+            return prev_board["board"]
 
     else:
-        return blank_board['board']
+        return blank_board["board"]
 
 def save_board(filename, board):
     '''Save the current game to a file.'''
+    board_to_save = {
+        "board": board
+    }
     with open(filename, "w") as file:
-        file.write(board)
+        json.dump(board_to_save, file)
 
 def display_board(board):
     '''Display a Tic-Tac-Toe board on the screen in a user-friendly way.'''

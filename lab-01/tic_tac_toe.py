@@ -49,11 +49,12 @@ def save_board(filename, board):
 
 def display_board(board):
     '''Display a Tic-Tac-Toe board on the screen in a user-friendly way.'''
-    print(board[0], "|", board[1], "|", board[2])
+    print(f" {board[0] or ' '} | {board[1] or ' '} | {board[2] or ' '}")
     print("---+---+---")
-    print(board[3], "|", board[4], "|", board[5])
+    print(f" {board[3] or ' '} | {board[4] or ' '} | {board[5] or ' '}")
     print("---+---+---")
-    print(board[6], "|", board[7], "|", board[8])
+    print(f" {board[6] or ' '} | {board[7] or ' '} | {board[8] or ' '}")
+    print()
 
 
 def is_x_turn(board):
@@ -73,8 +74,45 @@ def is_x_turn(board):
 def play_game(board):
     '''Play the game of Tic-Tac-Toe.'''
     # Put game play code here. Return False when the user has indicated they are done.
-    return False
+    
+    while True:
+        display_board(board)
+        
+        player_turn = is_x_turn(board)
+        
+        if player_turn:
+            player_choice = input("X> ")
+        else:
+            player_choice = input("O> ")
+        
+        if player_choice == "q":
+            return False
 
+        elif not player_choice.isdigit():
+            print("Invalid input, must be a number between 1-9 or type q to quit and save.")
+
+        else:
+            player_choice_int = int(player_choice)
+            
+            if player_choice_int > 9 or player_choice_int < 1:
+                print("Invalid range of numbers, you must enter a number between 1 and 9.")
+            
+            else:
+                player_choice_selection = player_choice_int - 1
+                if board[player_choice_selection] == BLANK:
+                    if player_turn:
+                        board[player_choice_selection] = X
+                    else:
+                        board[player_choice_selection] = O
+                    if game_done(board, message=True):
+                        print("Game completed.")
+                        return True
+                else:
+                    print("The square is already occupied, choose a different square.")
+        
+        
+
+    
 def game_done(board, message=False):
     '''Determine if the game is finished.
        Note that this function is provided as-is.
@@ -127,3 +165,14 @@ print(" 7 | 8 | 9 \n")
 print("The current board is:")
 
 # The file read code, game loop code, and file close code goes here.
+filename = "tic-tac-toe.json"
+board = read_board(filename)
+
+gameplay = play_game(board)
+
+if gameplay:
+    if os.path.exists(filename):
+        os.remove(filename)
+else:
+    save_board(filename, board)
+    

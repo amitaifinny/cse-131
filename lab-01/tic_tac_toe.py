@@ -5,9 +5,9 @@
 # 3. Assignment Description:
 #      Play the game of Tic-Tac-Toe
 # 4. What was the hardest part? Be as specific as possible.
-#      -a paragraph or two about how the assignment went for you-
+#      The hardest part was implementing the play_game function. It was difficult to use all the other functions in conjunction with each other and to implement how the game play works. 
 # 5. How long did it take for you to complete the assignment?
-#      -total time in hours including reading the assignment and submitting the program-
+#      4 hours.
 
 import json
 import os
@@ -175,4 +175,3 @@ if gameplay:
         os.remove(filename)
 else:
     save_board(filename, board)
-    
